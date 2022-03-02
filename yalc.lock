@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "poissimple": {
+      "signature": "3e253b29130c52366646b0bdd91bd942",
+      "file": true
+    }
+  }
+}

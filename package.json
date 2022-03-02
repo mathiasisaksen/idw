@@ -1,0 +1,27 @@
+{
+  "name": "idw",
+  "version": "0.0.1",
+  "description": "Interpolation of irregular data in any number of dimensions using inverse distance weighting (IDW). The module offers flexibility through multiple modifiable components.",
+  "keywords": [
+    "interpolate",
+    "interpolation",
+    "inverse distance weighting",
+    "idw",
+    "smoothing"
+  ],
+  "homepage": "https://github.com/mathiasisaksen/idw",
+  "bugs": "https://github.com/mathiasisaksen/idw/issues",
+  "license": "MIT",
+  "author": "Mathias Isaksen",
+  "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathiasisaksen/idw.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "poissimple": "file:.yalc/poissimple"
+  }
+}
