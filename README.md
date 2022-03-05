@@ -1,6 +1,7 @@
-# idw
+# <img src="./documentation/img/logo.png" style="height:60px;margin: 10px 5px 0 5px"></img>
 
-A JavaScript package for flexible inverse distance weighting (IDW) in any number of dimensions.
+idw is a JavaScript package for flexible interpolation of any-dimensional data using inverse distance weighting (IDW).
+It includes functionality for generating noise functions.
 
 ## Installation
 The module is available on npm:
