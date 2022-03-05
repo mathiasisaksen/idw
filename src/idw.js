@@ -143,7 +143,7 @@ IDW.prototype.useChessboardDistance = function() {
  * distance(p1, p2) = ((x2 - x1)^p + (y2 - y1)^p + ...)^(1 / p)
  * @param {float} power The value for the parameter p in the expression above
  */
-IDW.prototype.useMinkowskiDistance = function(power) {
+IDW.prototype.useMinkowskiDistance = function(power = 2) {
     this.setDistanceFunctions(d => Math.pow(d, power), arr => Math.pow(IDW.sum(arr), 1 / power));
 }
 
@@ -187,6 +187,7 @@ IDW.prototype.setPeriodicSmoothing = function(smoothing) {
  */
 IDW.prototype._distance = function(p1, p2) {
     if (this.dim === 1) {
+        // Ensure that position is contained in array
         p1 = (typeof p1 === "number") ? [p1] : p1;
         p2 = (typeof p2 === "number") ? [p2] : p2;
     }

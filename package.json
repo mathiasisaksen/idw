@@ -22,6 +22,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "poissimple": "file:.yalc/poissimple"
+    "poissimple": "^0.0.2"
   }
 }

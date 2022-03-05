@@ -16,19 +16,22 @@ const IDW = require("./idw.js");
  * @param {function} [options.valueFunction] Function used for generating values, with the associated position passed as a parameter, defaults to the parameter 'rng'
  * @param {Array|Array[]} [options.extent] Specifies the extent from which the positions are sampled, defaults to "volume" bounded between -1 and 1 along each axis
  * @param {boolean|Array} [options.periodic] Specifies whether the noise function should be periodic/tileable, either a single boolean or an array of booleans with one value per dimension
- * @param {function} [rng] RNG used for generating the random values (if valueFunction is not specified) and positions 
+ * @param {function|int} [rng] Specifies the RNG used for generating the random values (if valueFunction is not specified) and positions, either an RNG function or an integer seed value, defaults to Math.random
  * 
  * @constructor
  */
-function NoiseIDW(options, rng = Math.random) {
+function NoiseIDW(options, rng) {
     this.n = options.n;
     if (this.n < 2) throw new Error("n cannot be less than 2.");
+
+    this.rng = typeof rng === "number" ? NoiseIDW._generateRNG(rng) :
+               typeof rng === "function" ? rng : Math.random;
 
     this.dim = options.dimensions;
     this.minValue = options.minValue || 0;
     this.maxValue = options.maxValue || 1;
     this.hasSpecifiedValueFunction = options.valueFunction !== undefined;
-    this.valueFunction = options.valueFunction || (() => rng());
+    this.valueFunction = options.valueFunction || (() => this.rng());
 
     // If one-dimensonal and extent is specified, wrap in outer array
     if (this.dim === 1 && options.extent) {
@@ -52,8 +55,6 @@ function NoiseIDW(options, rng = Math.random) {
         if (!v) return;
         this.periodicExtent[i] = this.extent[i];
     });
-
-    this.rng = rng;
 
     this._generatePositions();
     this._generateValues();
@@ -98,6 +99,24 @@ NoiseIDW.prototype._setupIDW = function() {
         periodicExtent: this.periodicExtent,
     }
     this.idw = new IDW(data, options);
+}
+
+/**
+ * Generates an RNG function
+ * @param {int} seed The seed value/initial state of the RNG
+ * @returns An RNG function
+ */
+ NoiseIDW._generateRNG = function(seed) {
+    // mulberry32 from https://github.com/bryc/code/blob/master/jshash/PRNGs.md
+    // License: Public domain. Software licenses are annoying. If your code is sacred, don't publish it. If you want to mess with people, golf your code or only release binaries. If your country lacks a public domain, you should probably start a revolution.
+    return function(min, max) {
+        if (min === undefined) [min, max] = [0, 1];
+        var t = seed += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        const v = ((t ^ t >>> 14) >>> 0) / 4294967296;
+        return min + (max - min)*v;
+  }
 }
 
 /**
