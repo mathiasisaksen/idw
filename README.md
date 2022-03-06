@@ -1,4 +1,4 @@
-# <img src="./documentation/img/logo-2.png" style="height:70px"></img>
+# <img src="./documentation/img/logo.png" style="height:70px"></img>
 
 idw is a JavaScript package for flexible interpolation of any-dimensional data using [inverse distance weighting (IDW)](https://en.wikipedia.org/wiki/Inverse_distance_weighting).
 It includes functionality for generating tileable noise functions.
@@ -20,16 +20,19 @@ The distances are `d₁ = distance(p, p1) = √((0 - 0.25)² + (0 - 0.4)²) = 0.
 The interpolated value is then the weighted average `v = (w₁*v₁ + w₂*v₂) / (w₁ + w₂) = 0.330`.
 
 In practice, the weights are usually computed as `w = 1 / d^p`, where the parameter `p` is a positive number.
-The first example below compares 1D interpolation with different values for `p`, and gives some useful intuition.
-Using a small value leads to a function with spiky tops and bottoms.
+The [first example below](#one-dimensional-data) compares 1D interpolation with different values for `p`, and gives some useful intuition.
+Using a small value leads to a function that has spikes at the data positions.
 As it increases, the function becomes smoother, and eventually flattens out to nearest-neighbor interpolation.
 In `idw`, the parameter `p` is specified in the `evaluate` method (see [API description](#api)).
+
+### Predefined distance functions
 
 The example above measures the distance using the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance): 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = √((x₂ - x₁)² + (y₂ - y₁)² + ...)`
 
-In addition to this, `idw` offers a number of predefined distance functions:
+where `...` indicates coordinates contributions in three or more dimensions.
+In addition this, `idw` offers a number of predefined distance functions:
 
 [Taxicab/Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry) (useTaxicabDistance):
 
@@ -43,7 +46,28 @@ In addition to this, `idw` offers a number of predefined distance functions:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = ((x₂ - x₁)ᵖ + (y₂ - y₁)ᵖ + ...)¹ᐟᵖ`
 
-`idw` also allows the user to define their 
+Euclidean distance is the default.
+
+### Custom distance functions
+
+`idw` also allows the user to define their own distance functions.
+Let `diff = [x₂, y₂,...] - [x₁, y₁,...] = [x₂ - x₁, y₂ - y₁,...]` be the difference between the two positions.
+The user specifies `innerDistFunction` and `outerDistFunction`.
+The former is applied to each element in `diff`, and the latter is applied to the resulting array:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = outerFunc([innerFunc(x2 - x1), innerFunc(y2 - y1),...])`
+
+Euclidean distance, for example, can be expresssed as
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`innerDistFunction = d => d*d`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`outerDistFunction = arr => Math.sqrt(IDW.sum(arr))`
+
+The function `IDW.sum` takes in an array and computes the sum of its elements.
+
+### Weight function
+
+
 
 ## Examples of use
 
