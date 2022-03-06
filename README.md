@@ -1,4 +1,4 @@
-# <img src="./documentation/img/logo.png" style="height:70px"></img>
+# <img src="./documentation/img/logo-3d.png" style="height:70px"></img>
 
 idw is a JavaScript package for flexible interpolation of any-dimensional data using [inverse distance weighting (IDW)](https://en.wikipedia.org/wiki/Inverse_distance_weighting).
 It includes functionality for generating tileable noise functions.
@@ -91,8 +91,8 @@ In the example above, the position `[2.1, 1.2]` is equivalent to `[0.1, 0.2]`.
 
 ### Weight function
 
-The weight function gives the user another way to modify the behavior of the interpolation function.
-Internally, the weights
+The `weightFunction` parameter gives the user another way to modify the behavior of the interpolation function.
+
 
 ## Examples of use
 
