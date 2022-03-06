@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="400">
+    <g transform="translate(60,10)">
+        <g transform="translate(0, 350)" strokeWidth="3" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle">
+            <path class="domain" stroke="#9d3c11" d="M0.5,6V0.5H710.5V6"></path>
+            <g class="tick" opacity="1" transform="translate(14.699999999999998,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">-0.2</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(71.5,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">0.0</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(128.3,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">0.2</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(185.1,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">0.4</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(241.89999999999998,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">0.6</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(298.70000000000005,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">0.8</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(355.5,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">1.0</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(412.29999999999995,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">1.2</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(469.09999999999997,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">1.4</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(525.9,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">1.6</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(582.6999999999999,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">1.8</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(639.5,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">2.0</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(696.3000000000001,0)">
+                <line stroke="#9d3c11" y2="6"></line>
+                <text fill="#9d3c11" y="9" dy="0.71em">2.2</text>
+            </g>
+            <text fill="#9d3c11" font-size="1rem" class="math" text-anchor="middle" x="355" y="34">x</text>
+        </g>
+        <g class="color-theme-dependent" transform="translate(0, 0)" fill="none" font-size="10" font-family="sans-serif" text-anchor="end">
+            <path class="domain" stroke="#9d3c11" d="M-6,350.5H0.5V0.5H-6"></path>
+            <g class="tick" opacity="1" transform="translate(0,345.9)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">-0.1</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,317.5)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.0</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,289.09999999999997)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.1</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,260.69999999999993)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.2</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,232.29999999999995)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.3</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,203.89999999999995)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.4</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,175.49999999999997)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.5</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,147.1)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.6</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,118.69999999999996)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.7</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,90.29999999999995)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.8</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,61.89999999999992)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">0.9</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,33.5)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">1.0</text>
+            </g>
+            <g class="tick" opacity="1" transform="translate(0,5.099999999999966)">
+                <line stroke="#9d3c11" x2="-6"></line>
+                <text fill="#9d3c11" x="-9" dy="0.32em">1.1</text>
+            </g>
+            <text fill="#9d3c11" font-size="1rem" class="math" text-anchor="middle" y="-34" x="-175" transform="rotate(-90)">y</text>
+        </g>
+        <path fill="none" stroke="#F0386B" stroke-width="1.775" stroke-dasharray="5,3" d="M71,350L71,0"></path>
+        <path fill="none" stroke="#F0386B" stroke-width="1.775" stroke-dasharray="5,3" d="M639,350L639,0"></path>
+        <path fill="none" stroke="#F0386B" stroke-width="1.775" stroke-dasharray="5,3" d="M0,317L710,317"></path>
+        <path fill="none" stroke="#F0386B" stroke-width="1.775" stroke-dasharray="5,3" d="M0,33L710,33"></path>
+        <path fill="none" stroke="#A44200" stroke-width="3.55" d="M90.02799999999999,317L127.8,288.59999999999997"></path>
+        <path fill="none" stroke="#A44200" stroke-width="3.55" d="M71,47.19999999999993L90.02799999999999,33"></path>
+        <path fill="none" stroke="#A44200" stroke-width="3.55" stroke-dasharray="5,3" d="M71,89.79999999999995L127.8,89.79999999999995L127.8,33"></path>
+        <path fill="none" stroke="#A44200" stroke-width="3.55" stroke-dasharray="5,3" d="M127.8,317L127.8,288.59999999999997"></path>
+        <path fill="none" stroke="#A44200" stroke-width="3.55" d="M582.1999999999999,89.79999999999995L639,47.19999999999993"></path>
+        <path fill="none" stroke="#A44200" stroke-width="3.55" stroke-dasharray="5,3" d="M582.1999999999999,89.79999999999995L639,89.79999999999995"></path>
+        <path fill="none" stroke="#2D7DD2" stroke-width="3.55" d="M127.8,288.59999999999997L582.1999999999999,89.79999999999995"></path>
+        <path fill="none" stroke="#2D7DD2" stroke-width="3.55" stroke-dasharray="5,3" d="M127.8,288.59999999999997L582.1999999999999,288.59999999999997L582.1999999999999,89.79999999999995"></path>
+        <path fill="none" stroke="#F0386B" stroke-width="3.55" d="M71,317L639,317L639,33L71,33L71,317"></path>
+        <circle cx="127.8" cy="288.59999999999997" r="8.875" fill="#00FFFF" opacity="1"></circle>
+        <circle cx="582.1999999999999" cy="89.79999999999995" r="8.875" fill="#e700ba" opacity="1"></circle>
+    </g>
+</svg>

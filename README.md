@@ -10,39 +10,40 @@ The module is available on npm:
 npm install idw
 ```
 
-## How it works
+## How (nearly) everything works
 
 Inverse distance weighting is a method for interpolating data consisting of pairs of positions and values.
 It interpolates by computing a weighted average of the supplied values, placing a higher amount of weight on those near the position of interest.
 
-Consider, for example, the two-dimensional positions `p₁ = [0, 0]` and `p₂ = [1, 1]` with corresponding values `v₁ = 0` and `v₂ = 1`, and let `p = [0.25, 0.4]` be the position that we want to interpolate.
+Consider, for example, the data consisting of two-dimensional positions `p₁ = [0, 0]` and `p₂ = [1, 1]` with corresponding values `v₁ = 0` and `v₂ = 1`, and let `p = [0.25, 0.4]` be the position that we want to interpolate.
 The distances are `d₁ = distance(p, p1) = √((0 - 0.25)² + (0 - 0.4)²) = 0.472` and `d₂ = distance(p, p2) = 0.960`, leading to weights `w₁ = 1 / d₁ = 2.112` and `w₂ = 1 / d₂ = 1.041`.
 The interpolated value is then the weighted average `v = (w₁*v₁ + w₂*v₂) / (w₁ + w₂) = 0.330`.
 
+### The power parameter
 In practice, the weights are usually computed as `w = 1 / d^p`, where the parameter `p` is a positive number.
-The [first example below](#one-dimensional-data) compares 1D interpolation with different values for `p`, and gives some useful intuition.
+The [first example below](#one-dimensional-function) compares 1D interpolation with different values for `p`, and gives some useful intuition.
 Using a small value leads to a function that has spikes at the data positions.
 As it increases, the function becomes smoother, and eventually flattens out to nearest-neighbor interpolation.
-In `idw`, the parameter `p` is specified in the `evaluate` method (see [API description](#api)).
+In `idw`, the parameter `p` is specified in the `evaluate` method (see the [API description](#api)).
 
 ### Predefined distance functions
 
-The example above measures the distance using the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance): 
+The example above measures the distance using the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) (i.e. the length of the straight line connecting the positions): 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = √((x₂ - x₁)² + (y₂ - y₁)² + ...)`
 
-where `...` indicates coordinates contributions in three or more dimensions.
-In addition this, `idw` offers a number of predefined distance functions:
+where `...` indicates additional coordinates in three or more dimensions.
+In addition to this, `idw` offers three predefined distance functions:
 
-[Taxicab/Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry) (useTaxicabDistance):
+[Taxicab/Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry) (`useTaxicabDistance()`):
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = |x₂ - x₁| + |y₂ - y₁| + ...`
 
-[Chebyshev/chessboard distance](https://en.wikipedia.org/wiki/Chebyshev_distance) (useChessboardDistance):
+[Chebyshev/chessboard distance](https://en.wikipedia.org/wiki/Chebyshev_distance) (`useChessboardDistance()`):
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = max(|x₂ - x₁|, |y₂ - y₁|,...)`
 
-[Minkowski distance](https://en.wikipedia.org/wiki/Minkowski_distance) (useMinkowskiDistance):
+[Minkowski distance](https://en.wikipedia.org/wiki/Minkowski_distance) (`useMinkowskiDistance(p)`):
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = ((x₂ - x₁)ᵖ + (y₂ - y₁)ᵖ + ...)¹ᐟᵖ`
 
@@ -51,27 +52,51 @@ Euclidean distance is the default.
 ### Custom distance functions
 
 `idw` also allows the user to define their own distance functions.
-Let `diff = [x₂, y₂,...] - [x₁, y₁,...] = [x₂ - x₁, y₂ - y₁,...]` be the difference between the two positions.
-The user specifies `innerDistFunction` and `outerDistFunction`.
-The former is applied to each element in `diff`, and the latter is applied to the resulting array:
+To understand how this works, first notice that each of the distance function above can be expressed as
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = outerFunc([innerFunc(x2 - x1), innerFunc(y2 - y1),...])`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`distance([x₁, y₁,...], [x₂, y₂,...]) = outerDistFunction([innerDistFunction(x2 - x1), innerDistFunction(y2 - y1),...])`.
 
-Euclidean distance, for example, can be expresssed as
+Euclidean distance, for example, is
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`innerDistFunction = d => d*d`
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`outerDistFunction = arr => Math.sqrt(IDW.sum(arr))`
 
-The function `IDW.sum` takes in an array and computes the sum of its elements.
+where the function `IDW.sum` takes in an array and computes the sum of its elements.
+
+Specifying custom values for `innerDistFunction` and `outerDistFunction` can lead to very interesting and unpredictable results.
+
+
+### Tileable functions
+The optional parameter `periodicExtent` can be used to create tileable interpolation functions.
+The image below demonstrates the situation where `periodicExtent = [[0, 2], [0, 1]]`.
+
+<p align="center">
+    <img src="./documentation/img/periodic.svg" style="display:block;max-width:70%;width:750px"></img>
+</p>
+
+In this case, the rectangle "wraps around", so that the opposite edges are connected, or "glued together".
+To better understand how this affects the function, let's compute the distance between the cyan (`[0.2, 0.1]`) and pink (`[1.8, 0.8]`) points.
+As always, there's the length of the straight line connecting the points, indicated by a solid blue line.
+Its length is `√((1.8 - 0.2)² + (0.8 - 0.1)²) = 1.75`.
+However, there's a second straight path connecting the points: moving along the solid brown line, which first crosses the right edge over to the left side, and then from the top to the bottom.
+The distance travelled along this path is `√((0.2 + 0.2)² + (0.2 + 0.1)²) = 0.5`, which is also the distance between the points.
+
+When a function has a `periodicExtent` specified, it becomes tileable, meaning that it repeats smoothly across the boundaries.
+The [two-dimensional example](#two-dimensional-function) demonstrates this.
+Note: It's possible to create functions that are tileable along some boundaries, but not others (see the [API documentation](#api)).
+
+When tileable interpolation functions are evaluated outside `periodicExtent`, the value at the equivalent position inside `periodicExtent` is returned.
+In the example above, the position `[2.1, 1.2]` is equivalent to `[0.1, 0.2]`.
 
 ### Weight function
 
-
+The weight function gives the user another way to modify the behavior of the interpolation function.
+Internally, the weights
 
 ## Examples of use
 
-### One-dimensional data:
+### One-dimensional function:
 In the one-dimensional case, the positions are specified as an array of numbers:
 ``` js
 const idw = new IDW({
@@ -91,7 +116,7 @@ Here's a comparison using the setup above, with the value of the power above eac
 </p>
 
 
-### Two-dimensional data
+### Two-dimensional function
 Now, the positions are represented as an array of arrays:
 ``` js
 const data = {
@@ -118,13 +143,14 @@ const positions = Array(100).fill().map(() => [Math.random(), Math.random()]);
 const values = positions.map(p => idw.evaluate(p, 3));
 console.log(values); // Outputs array of values [v1, v2,...]
 ```
-Here's how the function looks on a 1000 × 1000 grid over [0, 1] × [0, 1], with the positions indicated by their index in red:
+Here's how the function looks on a 1000 × 1000 grid over [-0.5, 1.5] × [0, 1], with the positions indicated by their index in red:
 <p align="center">
-    <img src="./documentation/img/2d-example.png" style="display:block;max-width:50%;width:750px"></img>
+    <img src="./documentation/img/2d-example-tiled.png" style="display:block;max-width:70%;width:750px"></img>
 </p>
 
+The black lines indiate `periodicExtent`.
 
-### Three-dimensional data
+### Three-dimensional function
 For the three-dimensional example, we'll use the `generateNoiseIDW` function to generate an `IDW` object with 40 random positions and values.
 The positions are sampled from [-1, 1] × [-1, 1] × [0, 1], and the function is tileable/periodic along the z-dimension.
 The RNG is specified using a seed value of 1.
