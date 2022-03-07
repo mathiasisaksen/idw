@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/logo-3d.png" style="height:70px"></img>
+# <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/logo-3d.png"></img>
 
 [![npm version](https://badge.fury.io/js/idw.svg)](https://badge.fury.io/js/idw)
 

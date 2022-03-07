@@ -1,6 +1,6 @@
 {
   "name": "idw",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Interpolation of irregular data in any number of dimensions using inverse distance weighting (IDW). The module offers flexibility through multiple modifiable components.",
   "keywords": [
     "interpolate",
