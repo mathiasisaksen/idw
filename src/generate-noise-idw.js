@@ -109,6 +109,7 @@ NoiseIDW.prototype._setupIDW = function() {
  NoiseIDW._generateRNG = function(seed) {
     // mulberry32 from https://github.com/bryc/code/blob/master/jshash/PRNGs.md
     // License: Public domain. Software licenses are annoying. If your code is sacred, don't publish it. If you want to mess with people, golf your code or only release binaries. If your country lacks a public domain, you should probably start a revolution.
+    // Modification: Add min-max parameters
     return function(min, max) {
         if (min === undefined) [min, max] = [0, 1];
         var t = seed += 0x6D2B79F5;
@@ -128,9 +129,9 @@ NoiseIDW.prototype._setupIDW = function() {
  * @param {float} [options.maxValue] The upper bound for the generated values, defaults to 1
  * @param {function} [options.valueFunction] Function used for generating values, with the associated position passed as a parameter, defaults to the parameter 'rng'
  * @param {Array|Array[]} [options.extent] Specifies the extent from which the positions are sampled, defaults to "volume" bounded between -1 and 1 along each axis
- * @param {boolean|Array} [options.periodic] Specifies whether the noise function should be periodic/tileable, either a single boolean or an array of booleans with one value per dimension
- * @param {function} [rng] RNG used for generating the random values (if valueFunction is not specified) and positions 
- * @returns The generated {@link IDW}.
+ * @param {boolean|Array} [options.periodic] Specifies whether the noise function should be periodic/tileable, either a single boolean or an array of booleans with one value per dimension, defaults to false
+ * @param {function|int} [rng] RNG used for generating the random values (if valueFunction is not specified) and positions 
+ * @returns {IDW} The generated {@link IDW}.
  */
 function generateNoiseIDW(options, rng = Math.random) {
     const noiseIDW = new NoiseIDW(options, rng);

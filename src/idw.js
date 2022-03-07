@@ -13,7 +13,7 @@
  * @param {function} [options.innerDistFunction] Function that is applied to each difference x2 - x1, y2 - y1,... when computing the distance between two points, defaults to d => d*d
  * @param {function} [options.outerDistFunction] Function that is applied to the sum of the differences when computing the distance between two points, should always return a non-negative value, defaults to Math.sqrt
  * @param {function} [options.weightFunction] The function that transforms the weight values before computing the weighted average, should expect inputs between 0 and 1 (unless strange distance functions are used)
- * @param {function} [options.denominatorOffset] Number that is added to the denominator when computing weights, defaults to 0
+ * @param {function} [options.denominatorOffset] Constant that is added to the denominator when computing weights, defaults to 0
  * @constructor
  */
 function IDW(data, options) {
@@ -38,7 +38,7 @@ function IDW(data, options) {
     this.hasCustomWeightFunction = options.weightFunction ? true : false;
 
     if (this.isPeriodic) this._validatePeriodicPositions();
-    this.setPeriodicSmoothing(0.05);
+    this.setPeriodicSmoothing(0.1);
 
 }
 
@@ -176,7 +176,7 @@ IDW.prototype.setWeightFunction = function(weightFunction) {
 IDW.prototype.setPeriodicSmoothing = function(smoothing) {
     if (typeof smoothing !== "number") throw new Error("smoothing must be a number");
     if (!(smoothing >=0 && smoothing <= 1)) throw new Error("smoothing must be between 0 and 1");
-    this.periodicSmoothing = smoothing;
+    this.periodicSmoothing = smoothing / 2;
 }
 
 /**
@@ -201,9 +201,9 @@ IDW.prototype._distance = function(p1, p2) {
 }
 
 IDW.prototype._standardDistance = function(p1, p2) {
-    let diffArray = Array(this.dim).fill().map((_, i) => {
+    const diffArray = Array(this.dim).fill().map((_, i) => {
         let d = p2[i] - p1[i];
-        return this.innerDistFunction(d);
+        return this.innerDistFunction(d, i);
     });
     return this.outerDistFunction(diffArray);
 }
@@ -214,20 +214,22 @@ IDW.prototype._periodicDistance = function(p1, p2) {
 
     const ext = this.extent;
 
-    let diffArray = Array(this.dim).fill().map((_, i) => {
+    const diffArray = Array(this.dim).fill().map((_, i) => {
         let d = p2[i] - p1[i];
         
         if (ext[i] !== undefined) {
             const width = ext[i][1] - ext[i][0];
             d = Math.abs(d);
-            d = Math.min(d, width - d);
+            // If the absolute coordinate difference is greater than width / 2,
+            // the "wrap around"-distance, width - d, is shorter
+            if (d > width / 2) d = width - d; 
 
             const w = this.periodicSmoothing;
-            // Maximum distance is width / 2 –> d / (width / 2) rescales to [0, 1]
+            // Maximum distance is width / 2 –––> d / (width / 2) rescales to [0, 1]
             d = width / 2 * IDW._squareEase(d / (width / 2), w, w);
         }
 
-        return this.innerDistFunction(d);
+        return this.innerDistFunction(d, i);
     });
     return this.outerDistFunction(diffArray);
 }
@@ -333,7 +335,7 @@ IDW.prototype.evaluate = function(position, power = 2) {
     if (this.hasCustomWeightFunction) weights = IDW._normalizeValues(weights);
     
     // Compute weighted average w_1*z_1 + ... + w_n*z_n
-    let weightedAverage = weights.reduce((sum, w, i) => (sum += w * this.values[i], sum), 0);
+    const weightedAverage = weights.reduce((sum, w, i) => (sum += w * this.values[i], sum), 0);
     return weightedAverage;
 }
 
