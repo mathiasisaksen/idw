@@ -101,7 +101,7 @@ IDW.prototype._mapPeriodically = function(position) {
  *     outerDistFunction = arr => Math.max(...arr)
  * 
  * Minkowski/Lp distance (https://en.wikipedia.org/wiki/Minkowski_distance):
- *     innerDistFunction = d => Math.pow(d, power)
+ *     innerDistFunction = d => Math.pow(Math.abs(d), power)
  *     outerDistFunction = arr => Math.pow(IDW.sum(arr), 1 / power)
  * 
  * @param {function} innerDistFunction The inner distance function
@@ -144,7 +144,7 @@ IDW.prototype.useChessboardDistance = function() {
  * @param {float} power The value for the parameter p in the expression above
  */
 IDW.prototype.useMinkowskiDistance = function(power = 2) {
-    this.setDistanceFunctions(d => Math.pow(d, power), arr => Math.pow(IDW.sum(arr), 1 / power));
+    this.setDistanceFunctions(d => Math.pow(Math.abs(d), power), arr => Math.pow(IDW.sum(arr), 1 / power));
 }
 
 /**
