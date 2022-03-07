@@ -34,7 +34,7 @@ console.log(values); // Outputs array of 100 values [v₁, v₂,...]
 The second parameter in `idw.evaluate` is the power used when computing the weights.
 Here's a comparison using the setup above, with the value of the power above each plot and original data shown as red points:
 <p align="center">
-    <img src="./documentation/img/1d-comparison.svg" style="display:block;max-width:80%;width:750px"></img>
+    <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/1d-comparison.svg" style="display:block;max-width:80%;width:750px"></img>
 </p>
 
 
@@ -69,7 +69,7 @@ console.log(values); // Outputs array of values [v1, v2,...]
 ```
 Here's how the function looks on a 1000 × 1000 grid over [-0.5, 1.5] × [0, 1], with the positions indicated by their index in red:
 <p align="center">
-    <img src="./documentation/img/2d-example-tiled.png" style="display:block;max-width:70%;width:750px"></img>
+    <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/2d-example-tiled.png" style="display:block;max-width:70%;width:750px"></img>
 </p>
 
 The black square indiates `periodicExtent`.
@@ -100,7 +100,7 @@ Since the function is periodic along the z-dimension, it leads to a perfect loop
 
 <p align="center">
     <a href="https://gfycat.com/piercingbleakeskimodog">
-        <img src="./documentation/img/3d-example.gif" style="display:block;max-width:30%;width:750px"></img>
+        <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/3d-example.gif" style="display:block;max-width:30%;width:500px"></img>
     </a>
 </p>
 
@@ -354,7 +354,7 @@ The optional parameter `periodicExtent` can be used to create tileable interpola
 The image below demonstrates the situation where `periodicExtent = [[0, 2], [0, 1]]`.
 
 <p align="center">
-    <img src="./documentation/img/periodic.svg" style="display:block;max-width:70%;width:750px"></img>
+    <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/periodic.svg" style="display:block;max-width:70%;width:750px"></img>
 </p>
 
 In this case, the rectangle "wraps around", so that the opposite edges are connected, or "glued together".
