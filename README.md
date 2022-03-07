@@ -99,7 +99,7 @@ The animation below shows the noise function as the z-coordinate increases from 
 Since the function is periodic along the z-dimension, it leads to a perfect loop!
 
 <p align="center">
-    <a href="https://gfycat.com/piercingbleakeskimodog">
+    <a href="https://gfycat.com/likelysnarlingborzoi">
         <img src="https://raw.githubusercontent.com/mathiasisaksen/idw/main/docs/img/3d-example.gif" style="display:block;max-width:30%;width:500px"></img>
     </a>
 </p>
