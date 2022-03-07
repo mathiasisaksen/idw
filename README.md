@@ -72,7 +72,7 @@ Here's how the function looks on a 1000 × 1000 grid over [-0.5, 1.5] × [0, 1],
     <img src="./documentation/img/2d-example-tiled.png" style="display:block;max-width:70%;width:750px"></img>
 </p>
 
-The black squares indiates `periodicExtent`.
+The black square indiates `periodicExtent`.
 
 ### Three-dimensional function
 For the three-dimensional example, we'll use the `generateNoiseIDW` function to generate an `IDW` object with 20 random positions and values.
@@ -91,7 +91,7 @@ let idw = generateNoiseIDW({
 
 // Interpolate at 100 random positions inside [-1, 1] × [-1, 1] × [0, 1]
 const positions = Array(100).fill().map(() => [-1 + 2*Math.random(), -1 + 2*Math.random(), Math.random()]);
-const values = positions.map(p => idw.evaluate(p, 10));
+const values = positions.map(p => idw.evaluate(p, 5));
 console.log(values); // Outputs array of values [v1, v2,...]
 ```
 
@@ -167,7 +167,7 @@ const value = idw.evaluate([0.2, 0.5], 3);
 
 #### **idw.setDistanceFunctions(innerDistFunction, outerDistFunction)**
 
-Sets the `innerDistFunction` and `outerDistFunction` parameters that determine the custom distance function ([see explanation](#custom-distance-functions)).
+Sets the `innerDistFunction` and `outerDistFunction` parameters that determine a custom distance function ([see explanation](#custom-distance-functions)).
 
 ``` js
 // Example: Euclidean distance
@@ -248,7 +248,7 @@ const { positions, values } = idw.getData();
 Generates and returns a noise function by creating an IDW object with randomly generated positions and values.
 
 - *options :*
-  - *n :* The number of random positions and values to generate for the IDW object. Required.
+  - *n :* The number of random positions and values to generate for the IDW object, cannot be less than 2. Required.
   - *dimensions :* The dimensionality of the noise function, must be an integer not less than 1. Required.
   - *minValue :* The minimum value for the randomly generated values. Defaults to 0.
   - *maxValue :* The maximum value for the randomly generated values. Defaults to 1.
@@ -273,6 +273,16 @@ const idw = generateNoiseIDW({
 
 console.log(idw.getData()); // The random positions and values generated for the IDW
 console.log(idw.evaluate([0, 0])); // Get interpolated value at [0, 0]
+```
+
+``` js
+const idw = generateNoiseIDW({
+    n: 5,
+    dimensions: 3,
+    valueFunction: p => p[0] + p[1] + p[2] // Value is determined by sum of coordinates
+}, 123);
+
+console.log(idw.evaluate([-0.3, 0.5, 0])); // Get interpolated value at [-0.3, 0.5, 0]
 ```
 
 ## How (nearly) everything works
