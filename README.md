@@ -1,6 +1,6 @@
 # <img src="./documentation/img/logo-3d.png" style="height:70px"></img>
 
-[![](https://badgen.net/npm/v/idw)](https://www.npmjs.com/package/idw)
+[![npm version](https://badge.fury.io/js/idw.svg)](https://badge.fury.io/js/idw)
 
 idw is a JavaScript package for flexible interpolation of any-dimensional data using [inverse distance weighting (IDW)](https://en.wikipedia.org/wiki/Inverse_distance_weighting).
 It includes functionality for generating tileable noise functions.
